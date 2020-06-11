@@ -129,5 +129,15 @@ function Switch (key)
     return;
 }
 
+function Prevew()
+{
+    var Name = document.getElementById("name").value;
+    var Style = document.getElementById("style").value;
 
+    var tempitem = document.getElementById("example");
+    tempitem.innerHTML = Name;
+    tempitem.className = "temp";
+    tempitem.setAttribute("style", (DefaultStyle + Style));
+    return;
+}
 
