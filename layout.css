@@ -1,0 +1,373 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans|Karla:400,700&display=swap');
+
+*
+{
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
+    transition: .5s;
+}
+/* font: 400 14px Karla, sans-serif; */
+
+.container
+{
+    padding: 0 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr 10fr 1fr;
+    grid-gap: 10px;
+    background: #80f6ff;
+}
+
+
+/* ------------------------------------------------------------------- */
+
+.acoes
+{
+    grid-area: 2 / 3 / 3 / 4;
+    border-radius: 5px;
+    background: #fefefe;
+    overflow: hidden;
+}
+
+.acoes .display
+{
+    position: relative;
+    animation: sobir 20s linear infinite;
+    align-items: center;
+    background: white;
+    overflow: hidden;
+}
+
+.acoes .display:hover
+{
+    animation-play-state: paused;
+}
+
+.acoes .display .metade
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: transparent;
+    width: 100%;
+}
+
+.acoes .display .metade .janela
+{
+    width: 90%;
+    height: 90px;
+    background: white;
+    border: #35495e solid 3px;    
+    margin: 5px;
+    border-radius: 10px;
+    box-shadow: 0px 5px #cecece;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2fr 1fr 2fr;
+    align-items: center;
+    justify-items: center;
+}
+
+.acoes .display .metade .janela:hover
+{
+    
+    border: #86aeda solid 3px;
+}
+
+.acoes .display .metade .janela .nome
+{
+    grid-area: 1 / 1 / 2 / 3;
+    align-self: flex-end;
+    font: 25px Josefin Sans, sans-serif;
+}
+
+.acoes .display .metade .janela .sigla
+{
+    grid-area: 2 / 1 / 3 / 3;
+    align-self: flex-start;
+    font: 600 15px Josefin Sans, sans-serif;
+}
+
+.acoes .display .metade .janela .preco
+{
+    grid-area: 3 / 1 / 4 / 2;
+    align-self: flex-start;
+    font: 600 25px Josefin Sans, sans-serif;
+}
+
+.acoes .display .metade .janela .var
+{
+    grid-area: 3 / 2 / 4 / 3;
+    align-self: flex-start;
+    font: 20px Josefin Sans, sans-serif;
+}
+
+@keyframes sobir 
+{
+    0%
+    {
+        transform: translateY(0);
+    }
+    100%
+    {
+        transform: translateY(-50%);
+    }
+}
+
+/* ----------------------------------------------------------------------- */
+
+.noticias
+{
+    grid-area: 2 / 2 / 3 / 3;
+    border-radius: 5px;
+    background: #fefefe;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: 1fr 12fr;
+}
+
+.noticias input
+{
+    display: none;
+}
+
+.noticias .button
+{
+    grid-row: 1 / 2;
+    margin: 4px;
+    width: 5vw;
+    height: 4vh;
+    border-radius: 20px;
+    background: #35495e;
+    align-self: center;
+    justify-self: center;
+}
+
+.noticias .main
+{
+    grid-area: 2 / 1 / 3 / 11;
+    background: #7b7bff;
+}
+
+
+/* -------------------------------------------------------------------------- */
+
+.atalhos
+{
+    grid-area: 2 / 1 / 3 / 2;
+    border-radius: 5px;
+    background: #fefefe;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: 1fr 10fr;
+    min-width: 270px;
+}
+
+.atalhos .seletores
+{
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: space-around;
+}
+
+.atalhos .seletores .direita
+{
+    border-radius: 20px;
+    overflow: hidden;
+    width: 100px;
+    height: 30px;
+    align-self: center;
+}
+
+.atalhos .seletores .direita:hover
+{
+    box-shadow: -3px 3px 10px #30fd1d;
+    cursor: pointer;
+}
+
+.atalhos .seletores .direita svg
+{
+    transform: translateX(-100px);
+    align-self: center;
+}
+
+.atalhos .seletores .direita:hover svg
+{
+    transform: translateX(5px);
+}
+
+.atalhos .seletores .direita:active svg
+{
+    transform: translateX(100px);
+}
+
+.atalhos .seletores .esquerda
+{
+    border-radius: 20px;
+    overflow: hidden;
+    width: 100px;
+    height: 30px;
+    align-self: center;
+}
+
+.atalhos .seletores .esquerda:hover
+{
+    box-shadow: 3px 3px 10px #30fd1d;
+    cursor: pointer;
+}
+
+.atalhos .seletores .esquerda svg
+{
+    transform: translateX(100px)rotateY(180deg);
+    align-self: center;
+    transform-style: preserve-3d;
+}
+
+.atalhos .seletores .esquerda:hover svg
+{
+    transform: translateX(5px)rotateY(180deg);
+}
+
+.atalhos .seletores .esquerda:active svg
+{
+    transform: translateX(-100px)rotateY(180deg);
+}
+
+.atalhos .seletores .green
+{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: #14a70e solid 2px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 4px;
+    /* background: #14a70e; */
+}
+
+#Green:target
+{
+    background: #14a70e;
+}
+
+.atalhos .carrocel
+{
+    grid-row: 2 / 3;
+    overflow: hidden;
+    display: inline-block;
+    text-align: center;
+    transition:all 2s;
+    position: relative;
+}
+
+.atalhos .painel
+{
+    position:absolute;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border:2px solid #35495e;
+    transition:all 2s;
+    color:#35495e;
+    text-decoration:none;
+    width:100%;
+    height: 100%;
+    line-height:30px;
+    border-radius: 4px;
+    transform: rotateY(90deg) translateZ(135px);
+}
+
+#painel1
+{
+    transform: rotateY(0deg) translateZ(135px);
+}
+
+.atalhos .carrocel #form
+{
+    transform: rotateY(-90deg) translateZ(135px);
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.atalhos .carrocel #form input
+{
+    margin-bottom: 5px;
+    border-radius: 10px;
+    box-shadow: 0px 6px 10px #555;
+    border: #aaa solid 2px;
+    height: 35px;
+}
+
+.atalhos .carrocel #form input:hover
+{
+    cursor: pointer;
+    border: double 2px #0f0;
+    box-shadow: 0px 6px 10px #2a2;
+}
+
+#screen
+{
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#screen .temp
+{
+    background: #ccc;
+    height: 60px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #444;
+    font: 600 25px Josefin Sans, sans-serif;
+    cursor: pointer;
+}
+
+.atalhos .carrocel #form button
+{
+    height: 40px;
+    border-radius: 20px;
+    border: solid 2px #ccc;
+    box-shadow: 0px 3px 4px #555;
+    background: #fefefe;
+    color: #fefefe;
+    margin-top: 10px;
+}
+
+.atalhos .carrocel #form button:hover
+{
+    box-shadow: 0px 10px 10px #2a2;
+    transition: .5s;
+    color: #0f0;
+    border: double 2px #0f0;
+    cursor: pointer;
+}
+
+.atalhos .carrocel #form button:active
+{
+    box-shadow: 0px 3px 4px #555;
+}
+
+@keyframes flecha
+{
+    0%{transform: translateX(5px)rotateY(180deg);}
+    50%{transform: translateX(-100px)rotateY(180deg);}
+    75%{transform: translateX(100px)rotateY(180deg);}
+    100%{transform: translateX(5px)rotateY(180deg);}
+}
