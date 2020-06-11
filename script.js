@@ -82,6 +82,7 @@ function CreateElement (item, index)
         element.id = item.name;
         element.setAttribute("style", (DefaultStyle + item.style));
         element.setAttribute("href", item.link);
+        element.setAttribute("target", "_blank");
         var Npainel = Math.floor(index/6) + 1;
         Npainel.toString;
         var painel = 'painel' + Npainel;
