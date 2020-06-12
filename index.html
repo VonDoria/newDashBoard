@@ -150,7 +150,7 @@
         <div class="atalhos">
             <div class="seletores">
                 <div class="esquerda" onclick="Switch('E')"><svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                    width="90px" height="30px" viewBox="0 0 464.000000 82.000000"
+                    width="90%" height="60%" viewBox="0 0 464.000000 82.000000"
                     preserveAspectRatio="xMidYMid meet">
                    
                    <g transform="translate(0.000000,82.000000) scale(0.100000,-0.100000)"
@@ -171,8 +171,8 @@
                    3 -12z"/>
                    </g>
                 </svg></div>
-                <div class="green" id="Green" onclick="Switch('M')"><svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                    width="30px" height="30px" viewBox="0 0 353.000000 409.000000"
+                <div class="green" id="Green"><svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                    width="88%" height="88%" viewBox="0 0 353.000000 409.000000"
                     preserveAspectRatio="xMidYMid meet">
     
                     <g transform="translate(0.000000,409.000000) scale(0.100000,-0.100000)"
@@ -205,9 +205,9 @@
                     -89 -318 -146 -517 -180 -277 -48 -621 21 -897 180 l-77 44 -193 0 -193 0
                     -167 -289z"/>
                     </g>
-                </svg></div>
+                </svg><span class="draghere"></span></div>
                 <div class="direita" onclick="Switch('D')"><svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                    width="90px" height="30px" viewBox="0 0 464.000000 82.000000"
+                    width="90%" height="60%" viewBox="0 0 464.000000 82.000000"
                     preserveAspectRatio="xMidYMid meet">
                    
                    <g transform="translate(0.000000,82.000000) scale(0.100000,-0.100000)"
@@ -242,7 +242,7 @@
                     <input id="style">
                     <label>Hover</label>
                     <input id="hover">
-                    <button onclick="Register()">Create</button>
+                    <button onclick="Register()" onKeyPress="return checkSubmit(event)">Create</button>
                 </div>
                 <div id="painel1" class="painel"></div>
             </div>
