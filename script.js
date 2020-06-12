@@ -2,16 +2,59 @@
 MenuID = ['form', 'painel1'];
 CurrentlyPage = 1;
 
-DefaultStyle = 'text-decoration: none;margin: 5px 20px;background: #ccc;height: 60px;border-radius: 15px;display: flex;flex-direction: column;justify-content: center;color: #444;font: 600 25px Josefin Sans, sans-serif;';
+DefaultStyle = 'box-shadow: 0px 3px 4px #555;text-decoration: none;margin: 5px 20px;background: #ccc;height: 60px;border-radius: 15px;display: flex;flex-direction: column;justify-content: center;color: #444;font: 600 25px Josefin Sans, sans-serif;';
 ListLength = 0;
-
+AuxiliarList = [];
 
 CheckList();
 
 if(localStorage.getItem("LinkList") != "[]" && localStorage.getItem("LinkList") != null) LinkList.map(CreateElement);
 
 
+document.addEventListener("dragstart", event => {
+    event.dataTransfer.setData("Text", event.target.id);
+    event.target.style.opacity = "0.4";
+});
+
+document.addEventListener("dragend", event => event.target.style.opacity = "1");
+
+document.addEventListener("dragenter", event => {
+    if(event.target.className == "draghere") event.target.style.boxShadow = "0px 0px 15px 10px #30fd1d";
+});
+
+document.addEventListener("dragover", event => event.preventDefault());
+
+document.addEventListener("dragleave", event => {
+    if (event.target.className == "draghere") event.target.style.boxShadow = "none";
+});
+
+document.addEventListener("drop", event => {
+    if(event.target.className == "draghere")
+    {
+        document.querySelector('.draghere').style.boxShadow = "none";
+        var data = event.dataTransfer.getData("Text");
+        document.getElementById(data).style.display = "none";
+        var x = AuxiliarList.indexOf(data);
+        AuxiliarList.splice(x, 1);
+        LinkList.splice(x, 1);
+        StorageList = JSON.stringify(LinkList);
+        localStorage.setItem("LinkList", StorageList);
+        CheckList();
+        LinkList.map(CreateElement);
+        console.log("Item excluido");
+    }    
+    if(event.target.className == "painel")
+    {
+        document.querySelector('.draghere').style.boxShadow = "none";
+        var data = event.dataTransfer.getData("Text");
+        event.target.appendChild(document.getElementById(data));
+    }
+});
+
+
+
 // ---------------------------------------------------------------------------------
+
 
 function Register()
 {
@@ -75,7 +118,8 @@ function CreateElement (item, index)
 {
     if(document.getElementById(item.name) == null)
     {
-        console.log(item.name);
+        // console.log(item.name);
+        AuxiliarList[index] = item.name;
         var element = document.createElement("A");
         element.innerHTML = item.name;
         element.className = "temp";
@@ -83,10 +127,10 @@ function CreateElement (item, index)
         element.setAttribute("style", (DefaultStyle + item.style));
         element.setAttribute("href", item.link);
         element.setAttribute("target", "_blank");
+        element.setAttribute("draggable", "true");
         var Npainel = Math.floor(index/6) + 1;
         Npainel.toString;
         var painel = 'painel' + Npainel;
-        console.log(painel);
         if(document.getElementById(painel) == null) CreatePainel(painel);
         var painel = document.getElementById(painel);
         painel.appendChild(element);
@@ -139,5 +183,9 @@ function Prevew()
     tempitem.className = "temp";
     tempitem.setAttribute("style", (DefaultStyle + Style));
     return;
+}
+
+document.onkeypress = e => {
+    if(e.which == 13 && document.getElementById("name").value != "") Register();
 }
 
