@@ -5,11 +5,25 @@ CurrentlyPage = 1;
 DefaultStyle = 'box-shadow: 0px 3px 4px #555;text-decoration: none;margin: 5px 20px;background: #ccc;height: 60px;border-radius: 15px;display: flex;flex-direction: column;justify-content: center;color: #444;font: 600 25px Josefin Sans, sans-serif;';
 ListLength = 0;
 AuxiliarList = [];
+console.log(screen.width);
 
 CheckList();
 
 if(localStorage.getItem("LinkList") != "[]" && localStorage.getItem("LinkList") != null) LinkList.map(CreateElement);
 
+
+
+
+
+
+
+
+// -------------------------******************************************____________--------------------
+
+
+document.onkeypress = e => {
+    if(e.which == 13 && document.getElementById("name").value != "") Register();
+}
 
 document.addEventListener("dragstart", event => {
     event.dataTransfer.setData("Text", event.target.id);
@@ -50,8 +64,6 @@ document.addEventListener("drop", event => {
         event.target.appendChild(document.getElementById(data));
     }
 });
-
-
 
 // ---------------------------------------------------------------------------------
 
@@ -151,22 +163,28 @@ function CreatePainel(ID)
 
 function Switch (key) 
 {
+    let deslocamento = screen.width / 10;
+    
     if(key == 'E' && CurrentlyPage > 0) 
     {
         let atual = document.getElementById(MenuID[CurrentlyPage]);
         let anterior = document.getElementById(MenuID[(CurrentlyPage - 1)]);
-        atual.style.transform = "rotateY(90deg) translateZ(135px)";
-        anterior.style.transform = "rotateY(0deg) translateZ(135px)";
+        // atual.style.transform = "rotateY(90deg) translateZ(135px)";
+        // anterior.style.transform = "rotateY(0deg) translateZ(135px)";
+        atual.style.transform = `rotateY(90deg) translateZ(${deslocamento}px)`;
+        anterior.style.transform = `rotateY(0deg) translateZ(${deslocamento}px)`;
         CurrentlyPage = CurrentlyPage - 1;
     }
     if(key == 'D' && CurrentlyPage < (MenuID.length - 1)) 
     {
         let atual = document.getElementById(MenuID[CurrentlyPage]);
-        console.log(atual);
+        // console.log(atual);
         let proximo = document.getElementById(MenuID[(CurrentlyPage + 1)]);
-        console.log(proximo);
-        atual.style.transform = "rotateY(-90deg) translateZ(135px)";
-        proximo.style.transform = "rotateY(0deg) translateZ(135px)";
+        // console.log(proximo);
+        // atual.style.transform = "rotateY(-90deg) translateZ(135px)";
+        // proximo.style.transform = "rotateY(0deg) translateZ(135px)";
+        atual.style.transform = `rotateY(-90deg) translateZ(${deslocamento}px)`;
+        proximo.style.transform = `rotateY(0deg) translateZ(${deslocamento}px)`;
         CurrentlyPage = CurrentlyPage + 1;
     }
     console.log(CurrentlyPage);
@@ -184,8 +202,3 @@ function Prevew()
     tempitem.setAttribute("style", (DefaultStyle + Style));
     return;
 }
-
-document.onkeypress = e => {
-    if(e.which == 13 && document.getElementById("name").value != "") Register();
-}
-
