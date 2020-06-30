@@ -3,16 +3,11 @@ MenuID = ['form', 'painel1'];
 CurrentlyPage = 1;
 
 DefaultStyle = 'box-shadow: 0px 3px 4px #555;text-decoration: none;margin: 5px 20px;background: #ccc;height: 60px;border-radius: 15px;display: flex;flex-direction: column;justify-content: center;color: #444;font: 600 25px Josefin Sans, sans-serif;';
-ListLength = 0;
+LinkListLength = 0;
 AuxiliarList = [];
-console.log(screen.width);
-
-CheckList();
-
-if(localStorage.getItem("LinkList") != "[]" && localStorage.getItem("LinkList") != null) LinkList.map(CreateElement);
-
-
-
+painelSize = 6;
+TaskList = "";
+initialize();
 
 
 
@@ -30,10 +25,13 @@ document.addEventListener("dragstart", event => {
     event.target.style.opacity = "0.4";
 });
 
-document.addEventListener("dragend", event => event.target.style.opacity = "1");
+document.addEventListener("dragend", event => {
+    event.target.style.opacity = "1";
+});
+
 
 document.addEventListener("dragenter", event => {
-    if(event.target.className == "draghere") event.target.style.boxShadow = "0px 0px 15px 10px #30fd1d";
+    if(event.target.className == "draghere") event.target.style.boxShadow = "0px 0px 25px 30px #96ff8c";
 });
 
 document.addEventListener("dragover", event => event.preventDefault());
@@ -48,13 +46,24 @@ document.addEventListener("drop", event => {
         document.querySelector('.draghere').style.boxShadow = "none";
         var data = event.dataTransfer.getData("Text");
         document.getElementById(data).style.display = "none";
-        var x = AuxiliarList.indexOf(data);
-        AuxiliarList.splice(x, 1);
-        LinkList.splice(x, 1);
-        StorageList = JSON.stringify(LinkList);
-        localStorage.setItem("LinkList", StorageList);
-        CheckList();
-        LinkList.map(CreateElement);
+
+        if(data.includes("Task_"))
+        {
+            var x = TaskList.indexOf(data);
+            TaskList.splice(x, 1);
+            StorageList = JSON.stringify(TaskList);
+            localStorage.setItem("TaskList", StorageList);
+            CheckTask();
+            TaskList.map(CreateTask);
+        }else{
+            var x = AuxiliarList.indexOf(data);
+            AuxiliarList.splice(x, 1);
+            LinkList.splice(x, 1);
+            StorageList = JSON.stringify(LinkList);
+            localStorage.setItem("LinkList", StorageList);
+            CheckList();
+            LinkList.map(CreateElement);
+        }        
         console.log("Item excluido");
     }    
     if(event.target.className == "painel")
@@ -82,13 +91,12 @@ function Register()
 
     if(document.getElementById(Name) == null)
     {
-        LinkList[ListLength] = {
+        LinkList[LinkListLength] = {
             "name": Name,
             "link": Link,
             "style": Style,
             "hover": Hover
         };
-        // CreateElement(LinkList[ListLength]);
         StorageList = JSON.stringify(LinkList);
         localStorage.setItem("LinkList", StorageList);
         CheckList();
@@ -118,29 +126,28 @@ function CheckList()
         if(localStorage.getItem("LinkList") != "" && localStorage.getItem("LinkList") != null)
         {
             LinkList = JSON.parse(LinkList);
-            ListLength = LinkList.length;
-            console.log(ListLength);
-        }    
-        console.log(LinkList);
+            LinkListLength = LinkList.length;
+        }
     }    
     return;
 }
 
 function CreateElement (item, index)
 {
-    if(document.getElementById(item.name) == null)
+    var Task_id = "Link_" + item.name;
+    if(document.getElementById(Task_id) == null)
     {
         // console.log(item.name);
         AuxiliarList[index] = item.name;
         var element = document.createElement("A");
         element.innerHTML = item.name;
         element.className = "temp";
-        element.id = item.name;
+        element.id = "Link_" + item.name;
         element.setAttribute("style", (DefaultStyle + item.style));
         element.setAttribute("href", item.link);
         element.setAttribute("target", "_blank");
         element.setAttribute("draggable", "true");
-        var Npainel = Math.floor(index/6) + 1;
+        var Npainel = Math.floor(index/painelSize) + 1;
         Npainel.toString;
         var painel = 'painel' + Npainel;
         if(document.getElementById(painel) == null) CreatePainel(painel);
@@ -169,8 +176,6 @@ function Switch (key)
     {
         let atual = document.getElementById(MenuID[CurrentlyPage]);
         let anterior = document.getElementById(MenuID[(CurrentlyPage - 1)]);
-        // atual.style.transform = "rotateY(90deg) translateZ(135px)";
-        // anterior.style.transform = "rotateY(0deg) translateZ(135px)";
         atual.style.transform = `rotateY(90deg) translateZ(${deslocamento}px)`;
         anterior.style.transform = `rotateY(0deg) translateZ(${deslocamento}px)`;
         CurrentlyPage = CurrentlyPage - 1;
@@ -178,16 +183,11 @@ function Switch (key)
     if(key == 'D' && CurrentlyPage < (MenuID.length - 1)) 
     {
         let atual = document.getElementById(MenuID[CurrentlyPage]);
-        // console.log(atual);
         let proximo = document.getElementById(MenuID[(CurrentlyPage + 1)]);
-        // console.log(proximo);
-        // atual.style.transform = "rotateY(-90deg) translateZ(135px)";
-        // proximo.style.transform = "rotateY(0deg) translateZ(135px)";
         atual.style.transform = `rotateY(-90deg) translateZ(${deslocamento}px)`;
         proximo.style.transform = `rotateY(0deg) translateZ(${deslocamento}px)`;
         CurrentlyPage = CurrentlyPage + 1;
     }
-    console.log(CurrentlyPage);
     return;
 }
 
@@ -202,3 +202,121 @@ function Prevew()
     tempitem.setAttribute("style", (DefaultStyle + Style));
     return;
 }
+
+function initialize()
+{
+    painelSize = Math.floor((((screen.height)/12)*10) / 60);
+    painelSize = painelSize - 4;
+    CheckList();
+    if(localStorage.getItem("LinkList") != "[]" && localStorage.getItem("LinkList") != null) LinkList.map(CreateElement);
+    TaskList = CheckTask();
+    if(localStorage.getItem("TaskList") != "[]" && localStorage.getItem("TaskList") != null) TaskList.map(CreateTask);
+}
+
+function ChangePage(ID)
+{
+    if(ID == 'main_menu') 
+    {
+        var element = document.getElementById(ID);
+        element.style.zIndex = "2";
+        element.style.opacity = "1";
+    }
+    else
+    {
+        var pageList = document.querySelectorAll(".page_menu");
+        pageList.forEach(element => {
+            if(element.id == ID) 
+            {
+                element.style.zIndex = "0";
+                element.style.opacity = "1";
+            }else{
+                element.style.zIndex = "-1";
+                element.style.opacity = "0";
+            }    
+        });
+    }
+    return;
+}
+
+function CheckTask()
+{
+    if(localStorage.getItem("TaskList") == null)
+    {
+        console.log("Lista de Tarefas não encontrada");
+        localStorage.setItem("TaskList", "[]");
+        if(localStorage.getItem("TaskList") != null) 
+        {
+            console.log("Lista de Tarefas criada");
+            TaskList = localStorage.getItem("TaskList");
+            TaskList = JSON.parse(TaskList);
+            console.log(TaskList);
+        }
+    }
+    else{
+        TaskList = localStorage.getItem("TaskList");
+        if(localStorage.getItem("TaskList") != "" && localStorage.getItem("TaskList") != null)
+        {
+            TaskList = JSON.parse(TaskList);
+            TaskListLength = TaskList.length;
+        }
+    }    
+    return TaskList;
+}
+
+function CreateTask(item, index)
+{
+    var Task_id = "Task_" + item.title + "_" + index;
+    if(document.getElementById(Task_id) == null)
+    {
+        var elementInput = document.createElement("INPUT");
+        var elementCard = document.createElement("LABEL");
+        var elementContainer = document.createElement("DIV");
+        var elementTitle = document.createElement("DIV");
+        var elementDescription = document.createElement("P");
+        elementCard.appendChild(elementTitle);
+        elementCard.appendChild(elementDescription);
+        elementContainer.appendChild(elementInput);
+        elementContainer.appendChild(elementCard);
+        elementContainer.setAttribute("draggable", "true");
+        elementTitle.innerHTML = item.title;
+        elementDescription.innerHTML = item.description;
+        var inputId = "Task_" + index;
+        elementInput.id = inputId;
+        elementInput.setAttribute("type", "checkbox");
+        elementCard.setAttribute("for", inputId);
+        elementContainer.id = "Task_" + item.title + "_" + index;
+        elementContainer.className = "Task_container"
+        var fatherElement = document.querySelector('.planner_window');
+        fatherElement.appendChild(elementContainer);
+    }else{
+        return;
+    }
+    return;
+}
+
+function RegisterTask()
+{
+    var title = document.querySelector('#input_title').value;
+    var description = document.querySelector('#input_description').value;
+
+    document.querySelector('#input_title').value = "";
+    document.querySelector('#input_description').value = "";
+    var tempObject = {
+        "title": title,
+        "description": description
+    };
+
+    if(TaskList.indexOf(tempObject) == -1)
+    {
+        TaskList[TaskListLength] = tempObject;
+        StorageList = JSON.stringify(TaskList);
+        localStorage.setItem("TaskList", StorageList);
+        CheckTask();
+        TaskList.map(CreateTask);
+        console.log("Item criado");
+    }
+    else{console.log("O item já existe");}
+
+    return;
+}
+
