@@ -268,7 +268,7 @@
 
 .Task_container input:checked + label
 {
-    background: green;
+    background: #34A853;
 }
 
 .Task_container label
