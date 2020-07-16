@@ -253,33 +253,16 @@
     flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
-    max-height: 70vh;
+    max-height: 65vh;
+    margin: 5vw 0 0 0;
 }
 
 .Task_container
 {
     margin: 5px;
     width: fit-content;
-    max-width: 50vw;
-}
-
-.Task_container input
-{
-    display: none;
-}
-
-.Task_container input:checked + label
-{
-    background: #34A853;
-}
-
-.Task_container label
-{
-    width: fit-content;
-    max-width: 50vw;
-    /* height: 5vh; */
+    width: 25vw;
     border-radius: 20px;
-    background: #fefefe;
     box-shadow: #888 2px 2px 4px;
     display: flex;
     flex-direction: column;
@@ -290,17 +273,25 @@
     overflow: hidden;
 }
 
-.Task_container label div
+.Azul{background-color: #007bff;}
+.Branco{background-color: #fefefe;}
+.Cinza{background-color: #6c757d;}
+.Verde{background-color: #28a745;}
+.Vermelho{background-color: #dc3545 ;}
+.Amarelo{background-color: #ffc107 ;}
+.Preto{background-color: #343a40 ;}
+
+.Task_container div
 {
     margin: 5px 15px;
 }
 
-.Task_container label:hover p
+.Task_container:hover p
 {
     opacity: 1;
 }
 
-.Task_container label p
+.Task_container p
 {
     position: absolute;
     transform: translate(10px, 25px);
@@ -310,6 +301,7 @@
     border-radius: 5px;
     opacity: 0;
     transition: 1s;
+    max-width: 35vw;
 }
 
 
@@ -341,67 +333,40 @@
 
 .atalhos .seletores .direita
 {
-    border-radius: 20px;
+    border-radius: 10px;
     overflow: hidden;
     width: 40%;
-    height: 30px;
+    height: 7vh;
     align-self: center;
     display: flex;
+    transition: 1s;
+    background: linear-gradient(90deg, #fefefe, #30fd1d);
+    opacity: 0;
 }
 
 .atalhos .seletores .direita:hover
 {
-    box-shadow: -3px 3px 10px #30fd1d;
+    opacity: 1;
     cursor: pointer;
-}
-
-.atalhos .seletores .direita svg
-{
-    transform: translateX(-200px);
-    align-self: center;
-}
-
-.atalhos .seletores .direita:hover svg
-{
-    transform: translateX(5px);
-}
-
-.atalhos .seletores .direita:active svg
-{
-    transform: translateX(150px);
 }
 
 .atalhos .seletores .esquerda
 {
-    border-radius: 20px;
+    border-radius: 10px;
     overflow: hidden;
     width: 40%;
-    height: 30px;
+    height: 7vh;
     align-self: center;
     display: flex;
+    transition: 1s;
+    background: linear-gradient(90deg, #30fd1d, #fefefe);
+    opacity: 0;
 }
 
 .atalhos .seletores .esquerda:hover
 {
-    box-shadow: 3px 3px 10px #30fd1d;
+    opacity: 1;
     cursor: pointer;
-}
-
-.atalhos .seletores .esquerda svg
-{
-    transform: translateX(200px)rotateY(180deg);
-    align-self: center;
-    transform-style: preserve-3d;
-}
-
-.atalhos .seletores .esquerda:hover svg
-{
-    transform: translateX(5px)rotateY(180deg);
-}
-
-.atalhos .seletores .esquerda:active svg
-{
-    transform: translateX(-150px)rotateY(180deg);
 }
 
 .atalhos .seletores .green
@@ -657,4 +622,9 @@
 {
     text-decoration: none;
     color: #555;
+}
+
+.footer a:hover::after
+{
+    content: "_V17";
 }
