@@ -5,6 +5,7 @@ CurrentlyPage = 1;
 DefaultStyle = 'box-shadow: 0px 3px 4px #555;text-decoration: none;margin: 5px 20px;background: #ccc;height: 60px;border-radius: 15px;display: flex;flex-direction: column;justify-content: center;color: #444;font: 600 25px Josefin Sans, sans-serif;';
 LinkListLength = 0;
 AuxiliarList = [];
+StatusList = ["Branco", "Azul", "Cinza", "Verde", "Vermelho", "Amarelo", "Preto"];
 painelSize = 6;
 TaskList = "";
 initialize();
@@ -206,7 +207,7 @@ function Prevew()
 function initialize()
 {
     painelSize = Math.floor((((screen.height)/12)*10) / 60);
-    painelSize = painelSize - 4;
+    painelSize = painelSize - 6;
     CheckList();
     if(localStorage.getItem("LinkList") != "[]" && localStorage.getItem("LinkList") != null) LinkList.map(CreateElement);
     TaskList = CheckTask();
@@ -268,29 +269,40 @@ function CreateTask(item, index)
     var Task_id = "Task_" + item.title + "_" + index;
     if(document.getElementById(Task_id) == null)
     {
-        var elementInput = document.createElement("INPUT");
-        var elementCard = document.createElement("LABEL");
         var elementContainer = document.createElement("DIV");
         var elementTitle = document.createElement("DIV");
         var elementDescription = document.createElement("P");
-        elementCard.appendChild(elementTitle);
-        elementCard.appendChild(elementDescription);
-        elementContainer.appendChild(elementInput);
-        elementContainer.appendChild(elementCard);
+        elementContainer.appendChild(elementTitle);
+        elementContainer.appendChild(elementDescription);
         elementContainer.setAttribute("draggable", "true");
         elementTitle.innerHTML = item.title;
         elementDescription.innerHTML = item.description;
-        var inputId = "Task_" + index;
-        elementInput.id = inputId;
-        elementInput.setAttribute("type", "checkbox");
-        elementCard.setAttribute("for", inputId);
         elementContainer.id = "Task_" + item.title + "_" + index;
-        elementContainer.className = "Task_container"
+        elementContainer.setAttribute("onClick", `ChangeColor(${elementContainer.id})`);
+        elementContainer.className = "Task_container " + item.status;
         var fatherElement = document.querySelector('.planner_window');
         fatherElement.appendChild(elementContainer);
     }else{
         return;
     }
+    return;
+}
+
+function ChangeColor(id)
+{
+    TaskId = id.id;
+    clss = document.querySelector("#" + TaskId);
+    indexC = StatusList.indexOf(clss.classList[1]);
+
+    clss.classList.remove(clss.classList[1]);
+    clss.classList.add(StatusList[indexC + 1]);
+
+    TaskData = TaskId.split("_");
+    // console.log(TaskData[2]);
+    TaskList[TaskData[2]].status = StatusList[indexC + 1];
+    // console.log(StatusList[indexC + 1]);
+    StorageList = JSON.stringify(TaskList);
+    localStorage.setItem("TaskList", StorageList);
     return;
 }
 
@@ -303,7 +315,8 @@ function RegisterTask()
     document.querySelector('#input_description').value = "";
     var tempObject = {
         "title": title,
-        "description": description
+        "description": description,
+        "status": "Branco"
     };
 
     if(TaskList.indexOf(tempObject) == -1)
