@@ -278,7 +278,8 @@ function CreateTask(item, index)
         elementContainer.setAttribute("draggable", "true");
         elementTitle.innerHTML = item.title;
         elementDescription.innerHTML = item.description;
-        elementContainer.id = "Task_" + item.title + "_" + index;
+        var idName = item.title.replace(/ /g, "");
+        elementContainer.id = "Task_" + idName + "_" + index;
         elementContainer.setAttribute("onClick", `ChangeColor(${elementContainer.id})`);
         elementContainer.className = "Task_container " + item.status;
         var fatherElement = document.querySelector('.planner_window');
@@ -293,6 +294,8 @@ function ChangeColor(id)
 {
     TaskId = id.id;
     clss = document.querySelector("#" + TaskId);
+    // clss = document.getElementById(TaskId);
+    // console.log(clss);
     indexC = StatusList.indexOf(clss.classList[1]);
 
     clss.classList.remove(clss.classList[1]);
