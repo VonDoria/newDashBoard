@@ -218,6 +218,7 @@
     grid-area: 2 / 1 / 3 / 2;
     display: flex;
     justify-content: space-around;
+    z-index: 2;
 }
 
 .writetesk input
@@ -277,9 +278,9 @@
 .Branco{background-color: #fefefe;}
 .Cinza{background-color: #6c757d;}
 .Verde{background-color: #28a745;}
-.Vermelho{background-color: #dc3545 ;}
-.Amarelo{background-color: #ffc107 ;}
-.Preto{background-color: #343a40 ;}
+.Vermelho{background-color: #dc3545;}
+.Amarelo{background-color: #ffc107;}
+.Preto{background-color: #343a40; color: #fefefe;}
 
 .Task_container div
 {
@@ -289,6 +290,7 @@
 .Task_container:hover p
 {
     opacity: 1;
+    z-index: 3;
 }
 
 .Task_container p
@@ -626,5 +628,5 @@
 
 .footer a:hover::after
 {
-    content: "_V17";
+    content: "_V18";
 }
