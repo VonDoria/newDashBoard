@@ -4,9 +4,9 @@ CurrentlyPage = 1;
 
 DefaultStyle = 'box-shadow: 0px 3px 4px #555;text-decoration: none;margin: 5px 20px;background: #ccc;height: 60px;border-radius: 15px;display: flex;flex-direction: column;justify-content: center;color: #444;font: 600 25px Josefin Sans, sans-serif;';
 LinkListLength = 0;
-AuxiliarList = [];
+AuxiliarTaskList = [];
+AuxiliarLinkList = [];
 StatusList = ["Branco", "Azul", "Cinza", "Verde", "Vermelho", "Amarelo", "Preto"];
-painelSize = 6;
 TaskList = "";
 initialize();
 
@@ -50,15 +50,16 @@ document.addEventListener("drop", event => {
 
         if(data.includes("Task_"))
         {
-            var x = TaskList.indexOf(data);
+            var x = AuxiliarTaskList.indexOf(data);
+            AuxiliarTaskList.splice(x, 1);
             TaskList.splice(x, 1);
             StorageList = JSON.stringify(TaskList);
             localStorage.setItem("TaskList", StorageList);
             CheckTask();
             TaskList.map(CreateTask);
         }else{
-            var x = AuxiliarList.indexOf(data);
-            AuxiliarList.splice(x, 1);
+            var x = AuxiliarLinkList.indexOf(data);
+            AuxiliarLinkList.splice(x, 1);
             LinkList.splice(x, 1);
             StorageList = JSON.stringify(LinkList);
             localStorage.setItem("LinkList", StorageList);
@@ -139,7 +140,7 @@ function CreateElement (item, index)
     if(document.getElementById(Task_id) == null)
     {
         // console.log(item.name);
-        AuxiliarList[index] = item.name;
+        AuxiliarLinkList[index] = "Link_" + item.name;
         var element = document.createElement("A");
         element.innerHTML = item.name;
         element.className = "temp";
@@ -206,8 +207,6 @@ function Prevew()
 
 function initialize()
 {
-    // painelSize = Math.floor((((screen.height)/12)*10) / 60);
-    // painelSize = painelSize - 4;
     painelSize = Math.floor((document.querySelector("#carrocel").offsetHeight) / 70);
     CheckList();
     if(localStorage.getItem("LinkList") != "[]" && localStorage.getItem("LinkList") != null) LinkList.map(CreateElement);
@@ -267,7 +266,9 @@ function CheckTask()
 
 function CreateTask(item, index)
 {
-    var Task_id = "Task_" + item.title + "_" + index;
+    var idName = item.title.replace(/ /g, "");
+    var Task_id = "Task_" + idName;
+    AuxiliarTaskList[index] = Task_id;
     if(document.getElementById(Task_id) == null)
     {
         var elementContainer = document.createElement("DIV");
@@ -278,8 +279,7 @@ function CreateTask(item, index)
         elementContainer.setAttribute("draggable", "true");
         elementTitle.innerHTML = item.title;
         elementDescription.innerHTML = item.description;
-        var idName = item.title.replace(/ /g, "");
-        elementContainer.id = "Task_" + idName + "_" + index;
+        elementContainer.id = Task_id;
         elementContainer.setAttribute("onClick", `ChangeColor(${elementContainer.id})`);
         elementContainer.className = "Task_container " + item.status;
         var fatherElement = document.querySelector('.planner_window');
@@ -294,17 +294,13 @@ function ChangeColor(id)
 {
     TaskId = id.id;
     clss = document.querySelector("#" + TaskId);
-    // clss = document.getElementById(TaskId);
-    // console.log(clss);
     indexC = StatusList.indexOf(clss.classList[1]);
 
     clss.classList.remove(clss.classList[1]);
     clss.classList.add(StatusList[indexC + 1]);
 
-    TaskData = TaskId.split("_");
-    // console.log(TaskData[2]);
-    TaskList[TaskData[2]].status = StatusList[indexC + 1];
-    // console.log(StatusList[indexC + 1]);
+    var posicao = AuxiliarTaskList.indexOf(id.id);
+    TaskList[posicao].status = StatusList[indexC + 1];
     StorageList = JSON.stringify(TaskList);
     localStorage.setItem("TaskList", StorageList);
     return;
@@ -323,8 +319,10 @@ function RegisterTask()
         "status": "Branco"
     };
 
-    if(TaskList.indexOf(tempObject) == -1)
+    var idItem = "Task_" + title.replace(/ /g, "");
+    if(AuxiliarTaskList.indexOf(idItem) == -1)
     {
+        AuxiliarTaskList.push(idItem);
         TaskList[TaskListLength] = tempObject;
         StorageList = JSON.stringify(TaskList);
         localStorage.setItem("TaskList", StorageList);
@@ -333,7 +331,5 @@ function RegisterTask()
         console.log("Item criado");
     }
     else{console.log("O item já existe");}
-
     return;
 }
-
