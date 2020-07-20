@@ -207,7 +207,7 @@ function Prevew()
 
 function initialize()
 {
-    painelSize = Math.floor((document.querySelector("#carrocel").offsetHeight) / 100);
+    painelSize = Math.floor((document.querySelector("#carrocel").offsetHeight) / (screen.height / 10));
     CheckList();
     if(localStorage.getItem("LinkList") != "[]" && localStorage.getItem("LinkList") != null) LinkList.map(CreateElement);
     TaskList = CheckTask();
