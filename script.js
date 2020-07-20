@@ -6,7 +6,7 @@ DefaultStyle = 'box-shadow: 0px 3px 4px #555;text-decoration: none;margin: 5px 2
 LinkListLength = 0;
 AuxiliarTaskList = [];
 AuxiliarLinkList = [];
-StatusList = ["Branco", "Azul", "Cinza", "Verde", "Vermelho", "Amarelo", "Preto"];
+StatusList = ["Branco", "Azul", "Verde", "Vermelho", "Amarelo", "Cinza", "Preto"];
 TaskList = "";
 initialize();
 
@@ -207,7 +207,7 @@ function Prevew()
 
 function initialize()
 {
-    painelSize = Math.floor((document.querySelector("#carrocel").offsetHeight) / (screen.height / 10));
+    painelSize = Math.floor((document.querySelector("#carrocel").offsetHeight) / (screen.height / 12));
     CheckList();
     if(localStorage.getItem("LinkList") != "[]" && localStorage.getItem("LinkList") != null) LinkList.map(CreateElement);
     TaskList = CheckTask();
