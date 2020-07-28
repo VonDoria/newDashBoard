@@ -289,12 +289,14 @@
 
 .Task_container:hover p
 {
+    display: block;
     opacity: 1;
     z-index: 3;
 }
 
 .Task_container p
 {
+    display: none;
     position: absolute;
     transform: translate(10px, 25px);
     background: #fffeeb;
@@ -628,5 +630,5 @@
 
 .footer a:hover::after
 {
-    content: "_V18";
+    content: "_V19";
 }
